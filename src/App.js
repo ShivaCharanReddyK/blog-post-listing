@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import BlogPostList from './components/BlogPostList';
+
+const samplePosts = [
+  {
+    id: '1',
+    title: 'Getting Started with React',
+    summary: 'Learn the basics of React and build your first application.',
+    date: '2023-01-01',
+    url: '/posts/1',
+  },
+  {
+    id: '2',
+    title: 'CSS Grid vs. Flexbox',
+    summary: 'A comparison of two powerful layout systems in CSS.',
+    date: '2023-02-15',
+    url: '/posts/2',
+  },
+  {
+    id: '3',
+    title: 'Accessibility in Web Development',
+    summary: 'Tips for making your web applications more accessible.',
+    date: '2023-03-10',
+    url: '/posts/3',
+  },
+];
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <h1>Blog Posts</h1>
+        <BlogPostList posts={samplePosts} />
+      </div>
+      <Routes>
+        <Route path="/posts/:id" element={<p>Post Content Placeholder</p>} />
+      </Routes>
+    </Router>
   );
 }
 

@@ -1,0 +1,24 @@
+.blogPostList {
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 769px) {
+  .blogPostList {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1200px) {
+  .blogPostList {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.empty {
+  text-align: center;
+  color: #999999;
+  padding: 20px;
+}
