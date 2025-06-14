@@ -91,6 +91,11 @@ function App() {
     ));
   };
 
+  // Function to delete a post
+  const deletePost = (postId) => {
+    setPosts(posts.filter(post => post.id !== postId));
+  };
+
   // BlogPost component for displaying a single post
   const BlogPost = () => {
     const { id } = useParams();
@@ -106,6 +111,7 @@ function App() {
         content={post.content}
         author={post.author}
         date={post.date}
+        onDelete={deletePost}
       />
     );
   };

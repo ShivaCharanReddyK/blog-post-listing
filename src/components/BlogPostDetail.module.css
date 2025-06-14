@@ -27,6 +27,12 @@
   flex: 1;
 }
 
+.actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 .editButton {
   display: inline-block;
   background-color: #007BFF;
@@ -35,7 +41,6 @@
   padding: 8px 16px;
   border-radius: 4px;
   font-size: 14px;
-  margin-left: 10px;
   transition: background-color 0.2s;
 }
 
