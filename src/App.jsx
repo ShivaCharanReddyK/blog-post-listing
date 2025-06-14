@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Routes, Route, useParams, Link } from 'react-router-dom';
 import BlogPostList from './components/BlogPostList';
 import BlogPostDetail from './components/BlogPostDetail';
+import NewBlogPost from './pages/NewBlogPost';
+import EditBlogPost from './pages/EditBlogPost';
+import './App.css';
 
 const samplePosts = [
   {
@@ -73,35 +76,57 @@ const samplePosts = [
 ];
 
 // Single BlogPost page component that uses the BlogPostDetail component
-const BlogPost = () => {
-  const { id } = useParams();
-  const post = samplePosts.find(post => post.id === id);
-  
-  if (!post) {
-    return <BlogPostDetail />;
-  }
-  
-  return (
-    <BlogPostDetail
-      title={post.title}
-      content={post.content}
-      author={post.author}
-      date={post.date}
-    />
-  );
-};
-
 function App() {
+  const [posts, setPosts] = useState(samplePosts);
+
+  // Function to add a new post
+  const addPost = (newPost) => {
+    setPosts([...posts, newPost]);
+  };
+
+  // Function to update an existing post
+  const updatePost = (updatedPost) => {
+    setPosts(posts.map(post => 
+      post.id === updatedPost.id ? updatedPost : post
+    ));
+  };
+
+  // BlogPost component for displaying a single post
+  const BlogPost = () => {
+    const { id } = useParams();
+    const post = posts.find(post => post.id === id);
+    
+    if (!post) {
+      return <BlogPostDetail />;
+    }
+    
+    return (
+      <BlogPostDetail
+        title={post.title}
+        content={post.content}
+        author={post.author}
+        date={post.date}
+      />
+    );
+  };
+
   return (
     <>
-      <h1>
-        <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-          Blog Posts
+      <header className="app-header">
+        <h1>
+          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+            Blog Posts
+          </Link>
+        </h1>
+        <Link to="/new" className="new-post-button">
+          Create New Post
         </Link>
-      </h1>
+      </header>
       <Routes>
-        <Route path="/" element={<BlogPostList posts={samplePosts} />} />
+        <Route path="/" element={<BlogPostList posts={posts} />} />
         <Route path="posts/:id" element={<BlogPost />} />
+        <Route path="new" element={<NewBlogPost addPost={addPost} />} />
+        <Route path="edit/:id" element={<EditBlogPost posts={posts} updatePost={updatePost} />} />
       </Routes>
     </>
   );
