@@ -1,27 +1,28 @@
 /* BlogPostDetail.module.css */
 .blogPostDetail {
-  background: #FFFFFF;
-  border: 1px solid #dddddd;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  padding: 20px;
-  margin: 20px auto;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 2.5rem;
+  margin: 2rem auto;
   width: 100%;
   max-width: 800px;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 15px;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--gray-200);
+  padding-bottom: 1.5rem;
 }
 
 .title {
-  font-size: 28px;
-  font-weight: bold;
-  color: #333333;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--gray-900);
   margin-bottom: 0;
   line-height: 1.2;
   flex: 1;
@@ -29,120 +30,126 @@
 
 .actions {
   display: flex;
-  gap: 10px;
+  gap: 1rem;
   align-items: center;
 }
 
 .editButton {
   display: inline-block;
-  background-color: #007BFF;
+  background-color: var(--primary-color);
   color: white;
   text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  font-size: 14px;
-  transition: background-color 0.2s;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color var(--transition-speed);
 }
 
 .editButton:hover {
-  background-color: #0056b3;
+  background-color: var(--primary-dark);
+  text-decoration: none;
 }
 
-.author {
-  font-size: 14px;
-  color: #666666;
-  margin-bottom: 5px;
+.meta {
+  display: flex;
+  gap: 1.5rem;
+  color: var(--gray-600);
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
 }
 
-.date {
-  font-size: 12px;
-  color: #999999;
-  margin-bottom: 20px;
+.author, .date {
+  display: flex;
+  align-items: center;
+}
+
+.author:before {
+  content: '👤';
+  margin-right: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.date:before {
+  content: '📅';
+  margin-right: 0.5rem;
+  font-size: 1.1rem;
 }
 
 .content {
-  font-size: 14px;
-  line-height: 1.4;
-  color: #333333;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--gray-800);
 }
 
 .content h2 {
-  font-size: 22px;
-  margin: 20px 0 10px;
-  color: #333333;
+  font-size: 1.75rem;
+  margin: 1.5rem 0 1rem;
+  color: var(--gray-900);
+  border-bottom: 2px solid var(--gray-200);
+  padding-bottom: 0.5rem;
 }
 
 .content p {
-  margin-bottom: 15px;
+  margin-bottom: 1.5rem;
 }
 
 .content ul, .content ol {
-  margin-left: 20px;
-  margin-bottom: 15px;
+  margin-left: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .content li {
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
 }
 
 .content pre {
-  background-color: #f5f5f5;
-  padding: 10px;
-  border-radius: 4px;
+  background-color: var(--gray-100);
+  padding: 1rem;
+  border-radius: var(--radius-md);
   overflow-x: auto;
-  margin-bottom: 15px;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--gray-200);
+  font-family: monospace;
 }
 
 .content a {
-  color: #007BFF;
-  text-decoration: underline;
+  color: var(--primary-color);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--primary-color);
+  transition: all var(--transition-speed);
 }
 
 .content a:hover {
-  color: #0056b3;
+  color: var(--primary-dark);
+  border-bottom: 1px solid var(--primary-dark);
 }
 
 .notFound {
   text-align: center;
-  color: #999999;
-  padding: 20px;
-  font-size: 18px;
+  color: var(--gray-600);
+  padding: 3rem 0;
+  font-size: 1.25rem;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
 }
 
-/* Tablet View */
-@media (min-width: 769px) and (max-width: 1199px) {
+/* Responsive styles */
+@media (min-width: 768px) {
   .blogPostDetail {
-    padding: 30px;
+    padding: 3rem;
+    border-radius: var(--radius-lg);
   }
 
   .title {
-    font-size: 32px;
-    margin-bottom: 18px;
-  }
-
-  .author {
-    font-size: 16px;
-    margin-bottom: 8px;
-  }
-
-  .date {
-    font-size: 14px;
-    margin-bottom: 25px;
-  }
-  .content {
-    font-size: 16px;
-    line-height: 1.5;
-  }
-  
-  .content h2 {
-    font-size: 24px;
+    font-size: 2.5rem;
   }
 }
 
-/* Desktop View */
 @media (min-width: 1200px) {
   .blogPostDetail {
-    padding: 40px;
+    padding: 3.5rem;
   }
 
   .title {
