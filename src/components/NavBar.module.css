@@ -1,0 +1,150 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.navContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  height: 70px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+}
+
+.logoImage {
+  height: 40px;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover .logoImage,
+.logo:focus .logoImage {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 3px rgba(40, 167, 69, 0.5));
+}
+
+/* Desktop navigation */
+.desktopNav {
+  display: none;
+}
+
+.navLink {
+  margin-left: 1.5rem;
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.navLink:hover,
+.navLink:focus {
+  color: #28a745;
+  text-decoration: none;
+}
+
+/* Mobile menu button */
+.menuButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+}
+
+.menuButton:focus {
+  outline: 2px solid #28a745;
+  border-radius: 4px;
+}
+
+.hamburgerLine {
+  width: 100%;
+  height: 3px;
+  background-color: #333;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+/* Hamburger animation */
+.line1Open {
+  transform: translateY(10.5px) rotate(45deg);
+}
+
+.line2Open {
+  opacity: 0;
+}
+
+.line3Open {
+  transform: translateY(-10.5px) rotate(-45deg);
+}
+
+/* Mobile menu */
+.mobileMenu {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.showMobileMenu {
+  max-height: 300px;
+  padding: 1rem 0;
+}
+
+.mobileNavLink {
+  padding: 1rem 2rem;
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  text-align: center;
+  transition: background-color 0.2s;
+}
+
+.mobileNavLink:hover,
+.mobileNavLink:focus {
+  background-color: #f5f5f5;
+  color: #28a745;
+}
+
+/* Desktop styles */
+@media (min-width: 768px) {
+  .desktopNav {
+    display: flex;
+    align-items: center;
+  }
+  
+  .menuButton {
+    display: none;
+  }
+  
+  .mobileMenu {
+    display: none;
+  }
+}

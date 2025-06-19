@@ -1,7 +1,7 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   text-align: center;
 }
 
@@ -41,20 +41,21 @@
   color: #888;
 }
 
-/* App header styles */
-.app-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  padding: 0 20px;
+/* Content container styles */
+.content-container {
+  width: 100%;
 }
 
-.app-header h1 {
-  margin-bottom: 15px;
+.page-header {
+  margin-bottom: 2rem;
 }
 
+.page-header h2 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+/* New Post button is now in the NavBar */
 .new-post-button {
   display: inline-block;
   background-color: #28a745;
@@ -68,15 +69,4 @@
 
 .new-post-button:hover {
   background-color: #218838;
-}
-
-/* Media query for larger screens */
-@media (min-width: 768px) {
-  .app-header {
-    flex-direction: row;
-  }
-  
-  .app-header h1 {
-    margin-bottom: 0;
-  }
 }

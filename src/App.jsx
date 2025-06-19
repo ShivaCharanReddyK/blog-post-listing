@@ -4,6 +4,7 @@ import BlogPostList from './components/BlogPostList';
 import BlogPostDetail from './components/BlogPostDetail';
 import NewBlogPost from './pages/NewBlogPost';
 import EditBlogPost from './pages/EditBlogPost';
+import Layout from './components/Layout';
 import './App.css';
 
 const samplePosts = [
@@ -117,24 +118,19 @@ function App() {
   };
 
   return (
-    <>
-      <header className="app-header">
-        <h1>
-          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-            Blog Posts
-          </Link>
-        </h1>
-        <Link to="/new" className="new-post-button">
-          Create New Post
-        </Link>
-      </header>
-      <Routes>
-        <Route path="/" element={<BlogPostList posts={posts} />} />
-        <Route path="posts/:id" element={<BlogPost />} />
-        <Route path="new" element={<NewBlogPost addPost={addPost} />} />
-        <Route path="edit/:id" element={<EditBlogPost posts={posts} updatePost={updatePost} />} />
-      </Routes>
-    </>
+    <Layout>
+      <div className="content-container">
+        <div className="page-header">
+          <h2>Blog Posts</h2>
+        </div>
+        <Routes>
+          <Route path="/" element={<BlogPostList posts={posts} />} />
+          <Route path="posts/:id" element={<BlogPost />} />
+          <Route path="new" element={<NewBlogPost addPost={addPost} />} />
+          <Route path="edit/:id" element={<EditBlogPost posts={posts} updatePost={updatePost} />} />
+        </Routes>
+      </div>
+    </Layout>
   );
 }
 
