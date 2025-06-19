@@ -9,6 +9,15 @@ const BlogPostDetail = ({ title, content, author, date, onDelete }) => {
   const navigate = useNavigate();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  
+  const handleBackClick = (e) => {
+    if (e.ctrlKey || e.metaKey) {
+      // Let the browser handle cmd/ctrl+click
+      return;
+    }
+    e.preventDefault();
+    navigate('/');
+  };
 
   if (!title || !content || !author || !date) {
     return <p className={styles.notFound}>Blog post not found.</p>;
@@ -38,7 +47,14 @@ const BlogPostDetail = ({ title, content, author, date, onDelete }) => {
     day: 'numeric',
     year: 'numeric',
   });  return (
-    <article className={styles.blogPostDetail}>
+    <article className={styles.blogPostDetail}>      <Link 
+        to="/" 
+        className={styles.backButton} 
+        aria-label="Go back to homepage"
+        onClick={handleBackClick}
+      >
+        <span className={styles.backArrow}>←</span> Back to Posts
+      </Link>
       <div className={styles.header}>
         <h1 className={styles.title}>{title}</h1>
         <div className={styles.actions}>
@@ -48,10 +64,11 @@ const BlogPostDetail = ({ title, content, author, date, onDelete }) => {
             </Link>
           )}
           <DeleteButton onClick={handleOpenDialog} />
-        </div>
+        </div>      </div>
+      <div className={styles.meta}>
+        <p className={styles.author}>{author}</p>
+        <p className={styles.date}>{formattedDate}</p>
       </div>
-      <p className={styles.author}>By {author}</p>
-      <p className={styles.date}>Published on {formattedDate}</p>
       <div 
         className={styles.content} 
         dangerouslySetInnerHTML={{ __html: content }} 

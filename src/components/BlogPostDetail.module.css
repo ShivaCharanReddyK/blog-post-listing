@@ -8,6 +8,32 @@
   width: 100%;
   max-width: 800px;
   box-sizing: border-box;
+  position: relative;
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  color: var(--gray-700);
+  text-decoration: none;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  transition: all var(--transition-speed);
+}
+
+.backArrow {
+  margin-right: 0.5rem;
+  font-size: 1.25rem;
+  transition: transform var(--transition-speed);
+}
+
+.backButton:hover, .backButton:focus {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.backButton:hover .backArrow, .backButton:focus .backArrow {
+  transform: translateX(-4px);
 }
 
 .header {
