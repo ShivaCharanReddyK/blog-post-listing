@@ -1,24 +1,30 @@
 .blogPostList {
   display: grid;
-  gap: 20px;
-  padding: 20px;
+  gap: 2rem;
+  padding: 1.5rem 0;
   grid-template-columns: 1fr;
+  width: 100%;
 }
 
 @media (min-width: 769px) {
   .blogPostList {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 1200px) {
   .blogPostList {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 .empty {
   text-align: center;
-  color: #999999;
-  padding: 20px;
+  color: var(--gray-600);
+  padding: 3rem 0;
+  width: 100%;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  font-size: 1.125rem;
 }
