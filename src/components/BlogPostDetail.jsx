@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import DeleteButton from './DeleteButton';
 import ConfirmationDialog from './ConfirmationDialog';
+import CommentSection from './CommentSection';
 import styles from './BlogPostDetail.module.css';
 
-const BlogPostDetail = ({ title, content, author, date, onDelete }) => {
+const BlogPostDetail = ({ title, content, author, date, comments = [], onDelete }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -68,11 +69,12 @@ const BlogPostDetail = ({ title, content, author, date, onDelete }) => {
       <div className={styles.meta}>
         <p className={styles.author}>{author}</p>
         <p className={styles.date}>{formattedDate}</p>
-      </div>
-      <div 
+      </div>      <div 
         className={styles.content} 
         dangerouslySetInnerHTML={{ __html: content }} 
       />
+      
+      <CommentSection postId={id} comments={comments} />
       
       <ConfirmationDialog 
         isOpen={isDialogOpen}

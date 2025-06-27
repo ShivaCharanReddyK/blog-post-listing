@@ -1,0 +1,17 @@
+.commentSection {
+  margin-top: 4rem;
+  position: relative;
+  border-top: 1px solid var(--gray-200);
+  padding-top: 2rem;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .commentSection {
+    margin-top: 3rem;
+  }
+}

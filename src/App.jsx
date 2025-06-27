@@ -25,6 +25,22 @@ const samplePosts = [
     author: 'Jane Smith',
     date: '2023-01-01',
     url: '/posts/1',
+    comments: [
+      {
+        id: '1-1',
+        name: 'Alex Chen',
+        date: '2023-01-05T10:15:00',
+        text: 'Great introduction to React! I especially liked the explanation of virtual DOM.',
+        avatar: null
+      },
+      {
+        id: '1-2',
+        name: 'Taylor Wilson',
+        date: '2023-01-07T14:30:00',
+        text: 'This helped me understand the basics. Would love to see a follow-up on hooks and state management.',
+        avatar: null
+      }
+    ]
   },
   {
     id: '2',
@@ -51,6 +67,22 @@ const samplePosts = [
     author: 'Alex Johnson',
     date: '2023-02-15',
     url: '/posts/2',
+    comments: [
+      {
+        id: '2-1',
+        name: 'Rachel Green',
+        date: '2023-02-20T09:30:00',
+        text: 'This really helped me understand when to use Grid vs Flexbox - I was always confused about which one to pick!',
+        avatar: null
+      },
+      {
+        id: '2-2',
+        name: 'David Matthews',
+        date: '2023-03-05T16:45:00',
+        text: 'Great explanation! I\'ve been using Flexbox for everything, but now I see where Grid makes more sense.',
+        avatar: null
+      }
+    ]
   },
   {
     id: '3',
@@ -73,6 +105,29 @@ const samplePosts = [
     author: 'Morgan Lee',
     date: '2023-03-10',
     url: '/posts/3',
+    comments: [
+      {
+        id: '3-1',
+        name: 'Jamie Wilson',
+        date: '2023-03-15T11:20:00',
+        text: 'Thank you for highlighting the importance of accessibility! Too many developers overlook these issues.',
+        avatar: null
+      },
+      {
+        id: '3-2',
+        name: 'Sam Taylor',
+        date: '2023-03-18T14:10:00',
+        text: 'I\'ve been using the tools you recommended and they\'ve been incredibly helpful. WAVE in particular caught issues I never would have noticed.',
+        avatar: null
+      },
+      {
+        id: '3-3',
+        name: 'Casey Jordan',
+        date: '2023-04-02T09:45:00',
+        text: 'This should be required reading for all web developers. Clear, concise, and very practical advice.',
+        avatar: null
+      }
+    ]
   },
 ];
 
@@ -112,6 +167,7 @@ function App() {
         content={post.content}
         author={post.author}
         date={post.date}
+        comments={post.comments}
         onDelete={deletePost}
       />
     );
