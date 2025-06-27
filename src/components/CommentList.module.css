@@ -1,0 +1,36 @@
+.commentList {
+  margin-top: 3rem;
+}
+
+.commentsHeading {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--gray-800);
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+.commentsHeading:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 60px;
+  background-color: var(--primary-color);
+  border-radius: 1.5px;
+}
+
+.commentItems {
+  display: flex;
+  flex-direction: column;
+}
+
+.noComments {
+  padding: 2rem;
+  text-align: center;
+  background-color: var(--gray-100);
+  border-radius: var(--radius-md);
+  color: var(--gray-600);
+  font-style: italic;
+}
