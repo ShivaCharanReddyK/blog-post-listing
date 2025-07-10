@@ -42,10 +42,17 @@
 /* Desktop navigation */
 .desktopNav {
   display: none;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (min-width: 769px) {
+  .desktopNav {
+    display: flex;
+  }
 }
 
 .navLink {
-  margin-left: 2rem;
   color: var(--gray-700);
   text-decoration: none;
   font-weight: 500;
@@ -153,6 +160,19 @@
   background-color: var(--gray-100);
   color: var(--primary-color);
   border-left: 4px solid var(--primary-color);
+}
+
+/* Mobile controls container */
+.mobileControls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (min-width: 769px) {
+  .mobileControls {
+    display: none;
+  }
 }
 
 /* Desktop styles */

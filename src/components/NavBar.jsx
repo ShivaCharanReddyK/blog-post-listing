@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import SearchBar from './SearchBar';
 import blogLogo from '../assets/blog-logo.png';
 import styles from './NavBar.module.css';
 
-const NavBar = () => {
+const NavBar = ({ onSearch }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
@@ -55,21 +56,24 @@ const NavBar = () => {
           <Link to="/" className={styles.navLink}>Home</Link>
           <Link to="/new" className={styles.navLink}>Create Post</Link>
           <Link to="/" className={styles.navLink}>About</Link>
+          <SearchBar onSearch={onSearch} isMobile={false} />
+        </div>        {/* Mobile search and hamburger */}
+        <div className={styles.mobileControls}>
+          <SearchBar onSearch={onSearch} isMobile={true} />
+          {/* Mobile hamburger button */}
+          <button 
+            ref={buttonRef}
+            className={styles.menuButton} 
+            onClick={toggleMenu}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-menu"
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          >
+            <span className={`${styles.hamburgerLine} ${isMenuOpen ? styles.line1Open : ''}`}></span>
+            <span className={`${styles.hamburgerLine} ${isMenuOpen ? styles.line2Open : ''}`}></span>
+            <span className={`${styles.hamburgerLine} ${isMenuOpen ? styles.line3Open : ''}`}></span>
+          </button>
         </div>
-
-        {/* Mobile hamburger button */}
-        <button 
-          ref={buttonRef}
-          className={styles.menuButton} 
-          onClick={toggleMenu}
-          aria-expanded={isMenuOpen}
-          aria-controls="mobile-menu"
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-        >
-          <span className={`${styles.hamburgerLine} ${isMenuOpen ? styles.line1Open : ''}`}></span>
-          <span className={`${styles.hamburgerLine} ${isMenuOpen ? styles.line2Open : ''}`}></span>
-          <span className={`${styles.hamburgerLine} ${isMenuOpen ? styles.line3Open : ''}`}></span>
-        </button>
       </div>
 
       {/* Mobile menu */}

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { Routes, Route, useParams, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import BlogPostList from './components/BlogPostList';
 import BlogPostDetail from './components/BlogPostDetail';
+import SearchResults from './components/SearchResults';
 import NewBlogPost from './pages/NewBlogPost';
 import EditBlogPost from './pages/EditBlogPost';
 import Layout from './components/Layout';
@@ -134,6 +135,46 @@ const samplePosts = [
 // Single BlogPost page component that uses the BlogPostDetail component
 function App() {
   const [posts, setPosts] = useState(samplePosts);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const location = useLocation();
+  
+  // Clear search when navigating to different routes
+  useEffect(() => {
+    if (location.pathname !== '/') {
+      setSearchQuery('');
+      setSearchResults([]);
+    }
+  }, [location.pathname]);
+  
+  // Search function
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    
+    if (!query.trim()) {
+      setSearchResults([]);
+      return;
+    }
+
+    setIsSearching(true);
+    
+    // Simulate search delay for better UX
+    setTimeout(() => {
+      const results = posts.filter(post => {
+        const searchTerm = query.toLowerCase();
+        return (
+          post.title.toLowerCase().includes(searchTerm) ||
+          post.content.toLowerCase().includes(searchTerm) ||
+          post.summary.toLowerCase().includes(searchTerm) ||
+          post.author.toLowerCase().includes(searchTerm)
+        );
+      });
+      
+      setSearchResults(results);
+      setIsSearching(false);
+    }, 300);
+  };
 
   // Function to add a new post
   const addPost = (newPost) => {
@@ -173,18 +214,43 @@ function App() {
     );
   };
 
+  // Component to handle main content display based on search state
+  const MainContent = () => {
+    // Show search results when there's a search query and we're on the home page
+    if (searchQuery.trim() && location.pathname === '/') {
+      return (
+        <SearchResults 
+          results={searchResults} 
+          query={searchQuery} 
+          isSearching={isSearching}
+        />
+      );
+    }
+    
+    // Show regular routes when no search or on other pages
+    return (
+      <Routes>
+        <Route path="/" element={<BlogPostList posts={posts} />} />
+        <Route path="posts/:id" element={<BlogPost />} />
+        <Route path="new" element={<NewBlogPost addPost={addPost} />} />
+        <Route path="edit/:id" element={<EditBlogPost posts={posts} updatePost={updatePost} />} />
+      </Routes>
+    );
+  };
+
   return (
-    <Layout>
+    <Layout onSearch={handleSearch}>
       <div className="content-container">
         <div className="page-header">
-          <h2>Blog Posts</h2>
+          <h2>
+            {searchQuery && location.pathname === '/' ? 'Search Results' : 
+             location.pathname === '/new' ? 'Create New Post' :
+             location.pathname.startsWith('/edit/') ? 'Edit Post' :
+             location.pathname.startsWith('/posts/') ? 'Blog Post' :
+             'Blog Posts'}
+          </h2>
         </div>
-        <Routes>
-          <Route path="/" element={<BlogPostList posts={posts} />} />
-          <Route path="posts/:id" element={<BlogPost />} />
-          <Route path="new" element={<NewBlogPost addPost={addPost} />} />
-          <Route path="edit/:id" element={<EditBlogPost posts={posts} updatePost={updatePost} />} />
-        </Routes>
+        <MainContent />
       </div>
     </Layout>
   );
