@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Routes, Route, useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import BlogPostList from './components/BlogPostList';
 import BlogPostDetail from './components/BlogPostDetail';
@@ -6,6 +6,8 @@ import SearchResults from './components/SearchResults';
 import NewBlogPost from './pages/NewBlogPost';
 import EditBlogPost from './pages/EditBlogPost';
 import Layout from './components/Layout';
+import ErrorBoundary from './components/ErrorBoundary';
+import { useMemoryMonitor } from './hooks/usePerformance';
 import './App.css';
 
 const samplePosts = [
@@ -136,62 +138,54 @@ const samplePosts = [
 function App() {
   const [posts, setPosts] = useState(samplePosts);
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [isSearching, setIsSearching] = useState(false);
   const location = useLocation();
+  
+  // Monitor memory usage in development
+  useMemoryMonitor();
   
   // Clear search when navigating to different routes
   useEffect(() => {
     if (location.pathname !== '/') {
       setSearchQuery('');
-      setSearchResults([]);
     }
   }, [location.pathname]);
-  
-  // Search function
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    
-    if (!query.trim()) {
-      setSearchResults([]);
-      return;
-    }
 
-    setIsSearching(true);
+  // Memoized search results for better performance
+  const searchResults = useMemo(() => {
+    if (!searchQuery.trim()) return [];
     
-    // Simulate search delay for better UX
-    setTimeout(() => {
-      const results = posts.filter(post => {
-        const searchTerm = query.toLowerCase();
-        return (
-          post.title.toLowerCase().includes(searchTerm) ||
-          post.content.toLowerCase().includes(searchTerm) ||
-          post.summary.toLowerCase().includes(searchTerm) ||
-          post.author.toLowerCase().includes(searchTerm)
-        );
-      });
-      
-      setSearchResults(results);
-      setIsSearching(false);
-    }, 300);
-  };
+    const searchTerm = searchQuery.toLowerCase();
+    return posts.filter(post => {
+      return (
+        post.title.toLowerCase().includes(searchTerm) ||
+        post.content.toLowerCase().includes(searchTerm) ||
+        post.summary.toLowerCase().includes(searchTerm) ||
+        post.author.toLowerCase().includes(searchTerm)
+      );
+    });
+  }, [posts, searchQuery]);
+
+  // Optimized search handler with useCallback
+  const handleSearch = useCallback((query) => {
+    setSearchQuery(query);
+  }, []);
 
   // Function to add a new post
-  const addPost = (newPost) => {
-    setPosts([...posts, newPost]);
-  };
+  const addPost = useCallback((newPost) => {
+    setPosts(prevPosts => [...prevPosts, newPost]);
+  }, []);
 
   // Function to update an existing post
-  const updatePost = (updatedPost) => {
-    setPosts(posts.map(post => 
+  const updatePost = useCallback((updatedPost) => {
+    setPosts(prevPosts => prevPosts.map(post => 
       post.id === updatedPost.id ? updatedPost : post
     ));
-  };
+  }, []);
 
   // Function to delete a post
-  const deletePost = (postId) => {
-    setPosts(posts.filter(post => post.id !== postId));
-  };
+  const deletePost = useCallback((postId) => {
+    setPosts(prevPosts => prevPosts.filter(post => post.id !== postId));
+  }, []);
 
   // BlogPost component for displaying a single post
   const BlogPost = () => {
@@ -217,12 +211,12 @@ function App() {
   // Component to handle main content display based on search state
   const MainContent = () => {
     // Show search results when there's a search query and we're on the home page
-    if (searchQuery.trim() && location.pathname === '/') {
+    if (searchQuery && location.pathname === '/') {
       return (
         <SearchResults 
           results={searchResults} 
           query={searchQuery} 
-          isSearching={isSearching}
+          isSearching={false}
         />
       );
     }
@@ -239,20 +233,22 @@ function App() {
   };
 
   return (
-    <Layout onSearch={handleSearch}>
-      <div className="content-container">
-        <div className="page-header">
-          <h2>
-            {searchQuery && location.pathname === '/' ? 'Search Results' : 
-             location.pathname === '/new' ? 'Create New Post' :
-             location.pathname.startsWith('/edit/') ? 'Edit Post' :
-             location.pathname.startsWith('/posts/') ? 'Blog Post' :
-             'Blog Posts'}
-          </h2>
+    <ErrorBoundary>
+      <Layout onSearch={handleSearch}>
+        <div className="content-container">
+          <div className="page-header">
+            <h2>
+              {searchQuery && location.pathname === '/' ? 'Search Results' : 
+               location.pathname === '/new' ? 'Create New Post' :
+               location.pathname.startsWith('/edit/') ? 'Edit Post' :
+               location.pathname.startsWith('/posts/') ? 'Blog Post' :
+               'Blog Posts'}
+            </h2>
+          </div>
+          <MainContent />
         </div>
-        <MainContent />
-      </div>
-    </Layout>
+      </Layout>
+    </ErrorBoundary>
   );
 }
 

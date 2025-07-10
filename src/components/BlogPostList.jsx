@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import BlogPostItem from './BlogPostItem';
 import styles from './BlogPostList.module.css';
 
-const BlogPostList = ({ posts }) => {
+const BlogPostList = memo(({ posts }) => {
   if (!posts || posts.length === 0) {
     return <p className={styles.empty}>No blog posts available.</p>;
   }
@@ -20,6 +20,8 @@ const BlogPostList = ({ posts }) => {
       ))}
     </div>
   );
-};
+});
+
+BlogPostList.displayName = 'BlogPostList';
 
 export default BlogPostList;

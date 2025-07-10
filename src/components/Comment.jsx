@@ -1,21 +1,24 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
+import LazyImage from './LazyImage';
 import styles from './Comment.module.css';
 import defaultAvatar from '../assets/default-avatar.png';
 
-const Comment = ({ name, date, text, avatar }) => {
-  // Format date
-  const formattedDate = new Date(date).toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
+const Comment = memo(({ name, date, text, avatar }) => {
+  // Format date with memoization
+  const formattedDate = useMemo(() => {
+    return new Date(date).toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }, [date]);
 
   return (
     <div className={styles.comment}>
       <div className={styles.avatarContainer}>
-        <img 
+        <LazyImage 
           src={avatar || defaultAvatar} 
           alt={`${name}'s avatar`}
           className={styles.avatar}
@@ -30,6 +33,8 @@ const Comment = ({ name, date, text, avatar }) => {
       </div>
     </div>
   );
-};
+});
+
+Comment.displayName = 'Comment';
 
 export default Comment;

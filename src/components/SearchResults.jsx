@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './SearchResults.module.css';
 
-const SearchResults = ({ results, query, isSearching }) => {
+const SearchResults = memo(({ results, query, isSearching }) => {
   // Function to highlight search terms in text
   const highlightText = (text, query) => {
     if (!query.trim()) return text;
@@ -132,6 +132,8 @@ const SearchResults = ({ results, query, isSearching }) => {
       )}
     </div>
   );
-};
+});
+
+SearchResults.displayName = 'SearchResults';
 
 export default SearchResults;

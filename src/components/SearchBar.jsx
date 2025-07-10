@@ -1,10 +1,19 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useDebounce } from '../hooks/useSearch';
 import styles from './SearchBar.module.css';
 
 const SearchBar = ({ onSearch, isMobile = false }) => {
   const [query, setQuery] = useState('');
   const [isExpanded, setIsExpanded] = useState(!isMobile);
   const inputRef = useRef(null);
+  
+  // Debounce search for performance
+  const debouncedQuery = useDebounce(query, 300);
+
+  // Effect to trigger search when debounced query changes
+  useEffect(() => {
+    onSearch(debouncedQuery.trim());
+  }, [debouncedQuery, onSearch]);
 
   // Handle search submission
   const handleSubmit = (e) => {
@@ -12,15 +21,11 @@ const SearchBar = ({ onSearch, isMobile = false }) => {
     onSearch(query.trim());
   };
 
-  // Handle input change with debounced search for better UX
-  const handleInputChange = (e) => {
+  // Handle input change with real-time debounced search
+  const handleInputChange = useCallback((e) => {
     const value = e.target.value;
     setQuery(value);
-    
-    // Optional: Trigger search on every keystroke (debounced)
-    // You can enable this for real-time search
-    // onSearch(value.trim());
-  };
+  }, []);
 
   // Handle search icon click on mobile
   const handleSearchIconClick = () => {
@@ -36,11 +41,10 @@ const SearchBar = ({ onSearch, isMobile = false }) => {
   };
 
   // Handle cancel on mobile
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     setIsExpanded(false);
     setQuery('');
-    onSearch(''); // Clear search results
-  };
+  }, []);
 
   // Handle escape key
   useEffect(() => {

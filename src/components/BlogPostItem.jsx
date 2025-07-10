@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './BlogPostItem.module.css';
 
-const BlogPostItem = ({ title, summary, date, url }) => {
-  const formattedDate = new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
+const BlogPostItem = memo(({ title, summary, date, url }) => {
+  const formattedDate = useMemo(() => {
+    return new Date(date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  }, [date]);
 
   return (
     <div className={styles.blogPostItem}>
@@ -18,6 +20,8 @@ const BlogPostItem = ({ title, summary, date, url }) => {
       <p className={styles.date}>Published on {formattedDate}</p>
     </div>
   );
-};
+});
+
+BlogPostItem.displayName = 'BlogPostItem';
 
 export default BlogPostItem;
