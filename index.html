@@ -4,9 +4,25 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/blog-post-listing/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-    <script type="module" crossorigin src="/blog-post-listing/assets/index-DLvnQpm2.js"></script>
-    <link rel="stylesheet" crossorigin href="/blog-post-listing/assets/index-CkNjntUQ.css">
+    <meta name="description" content="A modern React blog application with search functionality and responsive design" />
+    <meta name="keywords" content="react, blog, search, responsive, web app" />
+    <meta name="author" content="Shiva Charan Reddy K" />
+    <title>Blog Post Listing - Modern React Blog</title>
+    
+    <!-- GitHub Pages SPA routing support -->
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
   </head>
   <body>
     <div id="root"></div>
